@@ -1,6 +1,7 @@
 //Importando modulos
 const express = require('express')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 
 //Importando outros arquivos da aplicação
 const routes = require('./routes')
@@ -15,13 +16,17 @@ const app = express()
     app.use(express.urlencoded({extended: true}))
     //Inportando modulo para logs, vamos utilizar o morgan
     app.use(morgan('dev'))
+    //Banco de dados
+    mongoose.connect('mongodb://localhost/uploader', {
+        useNewUrlParser: true //Diz para o mongo que estamos utilizando o novo estilo de url
+    })
 
 
 //Definindo rotas
 app.use(require('./routes'))
 
 //Iniciando servidor na porta do ambiente
-const PORT =  4321 //process.env.PORT ||
+const PORT =  9000 //process.env.PORT ||
 app.listen(PORT, ()=>[
     console.log('Servidor iniciado!')
 ])
